@@ -1,43 +1,50 @@
-##Linux实验报告一
 ---
-###软件环境
+# Linux实验报告一
+
+---
+
+##  软件环境 
+<br>
 Ubuntu 18.04服务器64位
 
 ----
 
-###实验问题
+##  实验问题
 
 * 如何配置无人值守安装iso并在Virtualbox中完成自动化安装。
 * virtualbox安装完Ubuntu后新添加的网卡如何实现系统引导自动启用和自动获取IP.
 *  如何使用sftp在虚拟机和宿主机之间的传输文件。
   
-##无人值守安装ios
+##  无人值守安装ios
 
 ----
+
 先【有人值守】方式安装好 一个可用的 Ubuntu 系统环境
 
-##安装过程
-####有人值守下配置好一台双网卡的Linux18.04.4虚拟机
+##  安装过程
+####     有人值守下配置好一台双网卡的Linux18.04.4虚拟机
+
 * 采用虚拟介质管理的方式clone一台linux18.04的虚拟机 
   
-  ![alt](./img/捕获.png)
+  ![alt](/img/捕获.png)
 ##配置双网卡 NAT+Host-Only
 
-![alt](./img/双网卡.png)
+![alt](/img/双网卡.png)
 
 1. 虚拟机命令行里输入命令 ifconfig -a
    发现有网卡未启动
 
 
-   ![alt](./img/捕获7.png)
+   ![alt](/img/捕获7.png)
 
 
 2. 手动启动，并重新查看网卡IP，记录IP地址:192.168.208.3
-   ![alt](./img/捕获8.png)
+   ![alt](/img/捕获8.png)
 
 ----
 
-###配置安装SSH
+
+# 配置安装SSH
 * 出现问题：ssh start时出错
 参考资料<https://blog.csdn.net/qq_24898865/article/details/81069226>
 
@@ -50,26 +57,29 @@ Ubuntu 18.04服务器64位
 打开"终端窗口"，输入`sudo ps -e |grep ssh`
 
 ----
-####PUTTY
+
+###   PUTTY
+
  *  **下载并安装PUTTY**
 
-  ![alt](./img/捕获5.png)
+  ![alt](/img/捕获5.png)
 
 * **利用克隆的虚拟机完成批量加载用psftp把某些文件从Windows复制进虚拟机**
 
 
-![alt](./img/PPFTP.png)
+![alt](/img/PPFTP.png)
   
 
 
 * **使用putty连接这台虚拟机**
   
-![alt](./img/2.png)
+![alt](/img/2.png)
 * 在PuTTY里进行操作。发现安装操作只能以root身份登录才能使用
 /用户登录mount操作失败/
-###解决
+
+## 解决
 * 用sudo passwd root进行root身份密码更改，再进行root登录，重新执行操作。 
-  ![alt](./img/更改身份.png)    
+  ![alt](/img/更改身份.png)    
 
 ---
 
@@ -83,7 +93,7 @@ mkdir loopdir
 ![alt](./img/3.png)
 >卸载iso：`sudo umount loopdir`
 >进入目标工作目录，并编辑Ubuntu安装引导界面增加一个新菜单项入口
-![alt](./img/last.png)
+![alt](/img/last.png)
 
 
 >添加以下内容后强制保存退出
@@ -93,7 +103,7 @@ label autoinstall
   kernel /install/vmlinuz
   append  file=/cdrom/preseed/ubuntu-server-autoinstall.seed debian-installer/locale=en_US console-setup/layoutcode=us keyboard-configuration/layoutcode=us console-setup/ask_detect=false localechooser/translation/warn-light=true localechooser/translation/warn-severe=true initrd=/install/initrd.gz root=/dev/ram rw quiet
   ```
-  ![alt](./img/1.png)
+  ![alt](/img/1.png)
 
   ----
   
